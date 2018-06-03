@@ -7,10 +7,10 @@
 		<div class="row">Total time:</div>
 	</div>
 	<div class="col text-right">
-		<div class="row">2</div>
-		<div class="row">20 minutes</div>
-		<div class="row">20 minutes</div>
-		<div class="row">40 minutes</div>
+		<div class="row">{{servings}}</div>
+		<div class="row">{{preparationTime}} minutes</div>
+		<div class="row">{{cookingTime}} minutes</div>
+		<div class="row">{{totalTime}} minutes</div>
 	</div>
 
 </div>
@@ -19,6 +19,12 @@
 
 <script>
 export default{
-	name: 'PreparationInfo'
+	name: 'PreparationInfo',
+	props: ['servings', 'preparationTime', 'cookingTime'],
+	computed: {
+		totalTime(){
+			return this.preparationTime + this.cookingTime
+		}
+	}
 }
 </script>

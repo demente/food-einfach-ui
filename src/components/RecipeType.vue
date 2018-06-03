@@ -1,16 +1,17 @@
 <template>
 <div class="row">
-<div class="column-sm col-form-label">
-<a href="/" class="btn btn-primary btn-sm">Vegetarian</a>
-<a href="/" class="btn btn-primary btn-sm">Main course</a>
-<a href="/" class="btn btn-primary btn-sm">Lunch</a>
-<a href="/" class="btn btn-primary btn-sm">Dinner</a>
-</div>
+	<div class="column-sm col-form-label">
+		<TypeTag v-for="type in types" :type="type" />
+	</div>
 </div>
 </template>
 
 <script>
+import TypeTag from './TypeTag'
+
 export default {
-  name: 'RecipeType'
+  name: 'RecipeType',
+  components: {TypeTag},
+  props: ['types']
 }
 </script>

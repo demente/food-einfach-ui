@@ -29,17 +29,11 @@ import NutritionRow from './NutritionRow'
 
 export default {
   name: 'NutritionalInfo',
+  props: ['elements', 'nutrients'],
   data() {
 	  return {
-		toggled: false,
-		elements: [{name: 'A', amount: '10 mg', rdi: '10%'},{name: 'B', amount: '10 mg', rdi: '10%'},{name: 'B6', amount: '10 mg', rdi: '10%'},{name:'B12', amount: '10 mg', rdi: '10%'}],
-		nutrients: [{name: 'Calories', amount: '2000 kcal'},
-			{name: 'Carbohydrates', amount: '20 gr'},
-			{name:'of which sugars', amount:'2 gr', parent: 'Carbohydrates'},
-			{name: 'Fats', amount: '5gr'},
-			{name: 'of which saturated', amount: '1 gr', parent: 'Fat'},
-			{name: 'Protein', amount: '200 gr'}]
-	  }
+		toggled: false
+		}
   },
   components: {NutritionRow}
 }

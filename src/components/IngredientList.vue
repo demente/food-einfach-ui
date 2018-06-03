@@ -23,10 +23,10 @@ import IngredientRow from './IngredientRow'
 export default {
   name: 'IngredientList',
   components: {IngredientRow},
+  props: ['ingredients'],
   data(){
   return {
-	  toggled:false,
-		ingredients: [{name: 'Beef', amount: '200 g'},{name: 'Onion', amount: '1 medium'}]	  
+	  toggled:false
 	  }}
 }
 </script>
