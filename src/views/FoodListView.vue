@@ -1,8 +1,12 @@
 <template>
 <div class="container">
+	<div class="row">&nbsp;</div>
+
 	<div class="row">
 		<h1>Food</h1>
 	</div>
+	<div class="row">&nbsp;</div>
+	
 	<div class="row">
 		<input class="form-control" placeholder="Filter..."
 			v-model="foodFilter" />

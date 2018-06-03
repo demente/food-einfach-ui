@@ -1,8 +1,19 @@
 <template>
 <div class="container">
+	<div class="row">&nbsp;</div>
+
 	<div class="row">
-		<h1>Recipes</h1>
+		<div class="col">
+			<h1>Recipes</h1>
+		</div>
+		<div class="col text-right">
+			<router-link type="button" class="btn btn-primary" :to="{name:'RecipeEditableView'}">New</router-link>
+		</div>
 	</div>
+
+
+	<div class="row">&nbsp;</div>
+
 	<div class="row">
 		<input class="form-control" placeholder="Filter..."
 			v-model="recipeFilter" />
