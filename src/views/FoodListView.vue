@@ -21,26 +21,38 @@
 </template>
 
 <script>
-import FoodRow from '../components/FoodRow'
+import FoodRow from "../components/FoodRow";
+import axios from "axios";
 
 export default {
-	 name: 'FoodListView',
-	 components: {FoodRow},
-	 data(){
-		 return {
-			 foodList: [{id: 1, name: 'Quinoa', type: 'Grains'},
-				 {id:2, name: 'Milk', type: 'Diary'},
-				 {id:3, name: 'Tomato', type: 'Vegetable'}],
-			foodFilter: ''
-		 }
-	 },
-	 computed: {
-		 filteredFoodList() {
-			 var filterValue = this.foodFilter.toLowerCase()
-			 return this.foodList.filter(function(food) {
-					return food.name.toLowerCase().includes(filterValue) || food.type.toLowerCase().includes(filterValue);
-				});
-		 }
-	 }
-}
+  name: "FoodListView",
+  components: { FoodRow },
+  data() {
+    return {
+      foodList: [],
+      foodFilter: ""
+    };
+  },
+  created() {
+    axios
+      .get("http://localhost:8080/food/")
+      .then(response => this.updateFoodList(response));
+  },
+  methods: {
+    updateFoodList(response) {
+      this.foodList = response.data;
+    }
+  },
+  computed: {
+    filteredFoodList() {
+      var filterValue = this.foodFilter.toLowerCase();
+      return this.foodList.filter(function(food) {
+        return (
+          food.name.toLowerCase().includes(filterValue) ||
+          food.type.toLowerCase().includes(filterValue)
+        );
+      });
+    }
+  }
+};
 </script>
