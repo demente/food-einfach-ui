@@ -9,11 +9,11 @@
 	<div class="form-group">
       <label>Type</label>
       <select class="form-control" v-model="food.type">
-        <option>Dairy</option>
-        <option>Vegetable</option>
-        <option>Fruit</option>
-        <option>Meat</option>
-        <option>Fish</option>
+        <option value="DAIRY">Dairy</option>
+        <option value="VEGETABLE">Vegetable</option>
+        <option value="FRUIT">Fruit</option>
+        <option value="MEAT">Meat</option>
+        <option value="GRAIN">Grain</option>
       </select>
     </div>
 
