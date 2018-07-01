@@ -34,13 +34,18 @@ export default new Router({
       component: FoodListView,
       props: true
     },
-
     {
       path: '/food/:id',
       name: 'FoodView',
       component: FoodView,
       props: true
-    }
+    },
+    {
+      path: '/food/:id/edit',
+      name: 'FoodEditableView',
+      component: RecipeEditableView,
+      props: true
+    },
   ],
   linkActiveClass: "active"
 })

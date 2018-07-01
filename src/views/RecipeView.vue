@@ -1,6 +1,11 @@
 <template>
 <div class="container">
-	<RecipeName :name="recipe.name" />
+	<div class="row">
+    <div>
+        <h1>{{recipe.name}}</h1>
+    </div>
+</div>
+
 	<RecipeType :types="recipe.type" />
 	<div class="row">
 		<div class="col">
@@ -12,7 +17,7 @@
 		</div>
 		<div class="col">
 			<ImageBlock :images="recipe.images" />
-			<NutritionalInfo :elements="recipe.elements"
+			<ToggleableNutritionalInfo :elements="recipe.elements"
 				:nutrients="recipe.nutrients" />
 		</div>
 	</div>
@@ -24,8 +29,7 @@
 import IngredientList from '../components/IngredientList'
 import ImageBlock from '../components/ImageBlock'
 import Instruction from '../components/Instruction'
-import NutritionalInfo from '../components/NutritionalInfo'
-import RecipeName from '../components/RecipeName'
+import ToggleableNutritionalInfo from '../components/ToggleableNutritionalInfo'
 import RecipeType from '../components/RecipeType'
 import PreparationInfo from '../components/PreparationInfo'
 
@@ -56,7 +60,7 @@ export default {
 	    }
 	  },
 	  components: {
-		  IngredientList, ImageBlock, Instruction, NutritionalInfo, RecipeName, RecipeType, PreparationInfo
+		  IngredientList, ImageBlock, Instruction, ToggleableNutritionalInfo, RecipeType, PreparationInfo
 	  }
 }
 </script>

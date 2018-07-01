@@ -35,7 +35,7 @@ export default {
   },
   created() {
     axios
-      .get("http://localhost:8080/food/")
+      .get("http://localhost:8080/foodinfo/")
       .then(response => this.updateFoodList(response));
   },
   methods: {
@@ -48,8 +48,8 @@ export default {
       var filterValue = this.foodFilter.toLowerCase();
       return this.foodList.filter(function(food) {
         return (
-          food.name.toLowerCase().includes(filterValue) ||
-          food.type.toLowerCase().includes(filterValue)
+          food.name.toLowerCase().includes(filterValue) 
+           ||          food.type.toLowerCase().includes(filterValue)
         );
       });
     }
