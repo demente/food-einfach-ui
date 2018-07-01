@@ -25,6 +25,7 @@ import FoodRow from "../components/FoodRow";
 import axios from "axios";
 
 export default {
+  
   name: "FoodListView",
   components: { FoodRow },
   data() {
@@ -49,7 +50,7 @@ export default {
       return this.foodList.filter(function(food) {
         return (
           food.name.toLowerCase().includes(filterValue) 
-           ||          food.type.toLowerCase().includes(filterValue)
+           || (food.type && food.type.toLowerCase().includes(filterValue))
         );
       });
     }
