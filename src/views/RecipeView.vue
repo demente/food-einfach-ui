@@ -1,10 +1,13 @@
 <template>
 <div class="container">
 	<div class="row">
-    <div>
-        <h1>{{recipe.name}}</h1>
-    </div>
-</div>
+    <div  class="col">
+		<h1>{{recipe.name}}</h1>
+	</div>
+	<div class="col text-right">
+			<router-link type="button" class="btn btn-primary" :to="{name:'RecipeEditableView', params: {id: recipe.id}}">Edit</router-link>
+	</div>
+	</div>
 
 	<RecipeType :types="recipe.type" />
 	<div class="row">
@@ -17,11 +20,11 @@
 		</div>
 		<div class="col">
 			<ImageBlock :images="recipe.images" />
-			<ToggleableNutritionalInfo :elements="recipe.elements"
-				:nutrients="recipe.nutrients" />
+			<ToggleableNutritionalInfo :elements="mineralsVitamins"
+				:nutritionalInformation="nutrients" />
 		</div>
 	</div>
-	<Instruction :steps="recipe.steps" />
+	{{recipe.instructions}}
 </div>
 </template>
 
@@ -32,6 +35,7 @@ import Instruction from '../components/Instruction'
 import ToggleableNutritionalInfo from '../components/ToggleableNutritionalInfo'
 import RecipeType from '../components/RecipeType'
 import PreparationInfo from '../components/PreparationInfo'
+import axios from 'axios'
 
 export default {
 	 name: 'RecipeView',
@@ -39,19 +43,12 @@ export default {
 	  data () {
 	    return {
 	    	recipe: {
-	    		name: 'Meatballs',
-	    		type: [{name:'Lunch', link: ''},{name:'Dinner', link: ''},{name:'Main Course', link: ''}],
-	    		servings: 2,
-	    		preparationTime: 20,
-	    		cookingTime: 40,
-	    		ingredients: [{name: 'Beef', amount: '200 g'},{name: 'Onion', amount: '1 medium'}],
-	    		elements: [{name: 'A', amount: '10 mg', rdi: '10%'},{name: 'B', amount: '10 mg', rdi: '10%'},{name: 'B6', amount: '10 mg', rdi: '10%'},{name:'B12', amount: '10 mg', rdi: '10%'}],
-	    		nutrients: [{name: 'Calories', amount: '2000 kcal'},
-	    			{name: 'Carbohydrates', amount: '20 gr'},
-	    			{name:'of which sugars', amount:'2 gr', parent: 'Carbohydrates'},
-	    			{name: 'Fats', amount: '5gr'},
-	    			{name: 'of which saturated', amount: '1 gr', parent: 'Fat'},
-	    			{name: 'Protein', amount: '200 gr'}],
+	    		name: null,
+	    		type: [],
+	    		servings: null,
+	    		preparationTime: null,
+	    		cookingTime: null,
+	    		ingredients: [{id: null, food: {}}],
 	    		images: [{file: require('../assets/meatballs.jpg'), description: 'Meatballs pic 1'},
 	  			  {file: require('../assets/meatballs2.jpg'), description: 'Meatballs pic 2'},
 	  			  {file: require('../assets/meatballs3.jpg'), description: 'Meatballs pic 3'}],
@@ -61,6 +58,79 @@ export default {
 	  },
 	  components: {
 		  IngredientList, ImageBlock, Instruction, ToggleableNutritionalInfo, RecipeType, PreparationInfo
-	  }
+	  },
+	 created() {
+      axios.get("http://localhost:8080/recipes/"+this.id).then((response)=>this.updateRecipe(response.data))
+  },
+   methods: {
+    updateRecipe(recipe){
+      this.recipe=recipe
+	}
+	},
+	computed: {
+			mineralsVitamins() {
+				var elements = {minerals: [], vitamins: []}
+				var minerals = {}
+				var vitamins = {}
+				var vitaminDailyNorms = {}
+				var mineralDailyNorms = {}
+				
+				for(var i in this.recipe.ingredients){
+					for(var j in this.recipe.ingredients[i].food.nutritionalInformation.minerals){
+						var mineral = this.recipe.ingredients[i].food.nutritionalInformation.minerals[j]
+
+						if(minerals[mineral.name]){
+							
+							minerals[mineral.name] += mineral.amount.weight	
+						}
+						else {
+							minerals[mineral.name] = mineral.amount.weight	
+							mineralDailyNorms[mineral.name] = mineral.dailyNorm.weight
+						}
+					
+					}
+					for(var k in  this.recipe.ingredients[i].food.nutritionalInformation.vitamins){
+						var vitamin = this.recipe.ingredients[i].food.nutritionalInformation.vitamins[k]
+						
+
+						if(vitamins[vitamin.name]){
+							vitamins[vitamin.name] += vitamin.amount.weight	
+						}
+						else {
+							vitaminDailyNorms[vitamin.name] = vitamin.dailyNorm.weight
+							vitamins[vitamin.name] = vitamin.amount.weight	
+						}
+					
+					}
+				}
+
+				for(var key in minerals){
+ 				 var value = minerals[key];
+ 				 elements.minerals.push({name: key, amount:minerals[key], dailyNorm: mineralDailyNorms[key]})
+				}
+				
+				for(var key in vitamins){
+ 				 var value = vitamins[key];
+ 				 elements.vitamins.push({name: key, amount:vitamins[key], dailyNorm: vitaminDailyNorms[key]})
+				}
+				
+
+				return elements
+			},
+			nutrients() {
+				var sum = {calories: 0, carbohydrates: 0, protein: 0, fat:0, fibre: 0, sugar: 0}
+				for(var i in this.recipe.ingredients){
+					
+					sum.calories += this.recipe.ingredients[i].food.nutritionalInformation.calories
+					sum.carbohydrates += this.recipe.ingredients[i].food.nutritionalInformation.carbohydrates.weight
+					sum.protein += this.recipe.ingredients[i].food.nutritionalInformation.protein.weight
+					sum.fat += this.recipe.ingredients[i].food.nutritionalInformation.fat.weight
+					sum.fibre += this.recipe.ingredients[i].food.nutritionalInformation.fibre.weight
+					sum.sugar += this.recipe.ingredients[i].food.nutritionalInformation.sugar.weight
+				}
+				
+				return sum
+			}
+	}
 }
 </script>

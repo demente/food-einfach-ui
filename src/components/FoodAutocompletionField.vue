@@ -14,12 +14,18 @@ import axios from 'axios';
 
 export default {
   name: "FoodAutocompletionField",
+  props: ['food'],
   data() {
       return {
         foodName: "",
         foodList: [],
         selectedFood: null
       }
+  },
+  created(){
+    if(this.food){
+      this.foodName = this.food.name
+    }
   },
   methods: {
     searchForFood() {

@@ -12,6 +12,12 @@
       <input type="number" class="form-control" v-model.number="recipe.preparationTime">
     </div>
 
+     <div class="form-group">
+      <label>Cooking Time (in minutes)</label>
+      <input type="number" class="form-control" v-model.number="recipe.cookingTime">
+    </div>
+
+
     <div class="form-group">
       <label>Servings</label>
       <input type="number" class="form-control" v-model.number="recipe.servings">

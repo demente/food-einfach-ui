@@ -12,7 +12,7 @@
 
 		<div class="card-body" v-if="!toggled">
 			<IngredientRow v-for="ingredient in ingredients"
-				:key="ingredient.name" :ingredient="ingredient" />
+				:key="ingredient.id" :ingredient="ingredient" />
 		</div>
 	</div>
 </div>
