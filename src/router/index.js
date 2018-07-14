@@ -6,13 +6,14 @@ import FoodListView from '@/views/FoodListView'
 import RecipeListView from '@/views/RecipeListView'
 import FoodView from '@/views/FoodView'
 import FoodEditableView from '@/views/FoodEditableView'
+import RecipeNewView from '@/views/RecipeNewView'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path: '/recipes/:id',
+      path: '/recipes/view/:id',
       name: 'RecipeView',
       component: RecipeView,
       props: true
@@ -20,29 +21,32 @@ export default new Router({
     {
       path: '/recipes',
       name: 'RecipeListView',
-      component: RecipeListView,
-      props: true
+      component: RecipeListView
     },
     {
-      path: '/recipes/:id/edit',
+      path: '/recipes/edit/:id',
       name: 'RecipeEditableView',
       component: RecipeEditableView,
       props: true
     },
     {
-      path: '/food',
-      name: 'FoodListView',
-      component: FoodListView,
-      props: true
+      path: '/recipes/new',
+      name: 'RecipeNewView',
+      component: RecipeNewView
     },
     {
-      path: '/food/:id',
+      path: '/food',
+      name: 'FoodListView',
+      component: FoodListView
+    },
+    {
+      path: '/food/view/:id',
       name: 'FoodView',
       component: FoodView,
       props: true
     },
     {
-      path: '/food/:id/edit',
+      path: '/food/edit/:id',
       name: 'FoodEditableView',
       component: FoodEditableView,
       props: true
