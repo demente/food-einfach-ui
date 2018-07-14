@@ -7,7 +7,7 @@
 			<h1>Recipes</h1>
 		</div>
 		<div class="col text-right">
-			<router-link type="button" class="btn btn-primary" :to="{name:'RecipeEditableView'}">New</router-link>
+			<router-link type="button" class="btn btn-primary" :to="{name:'RecipeNewView'}">New</router-link>
 		</div>
 	</div>
 
@@ -28,24 +28,35 @@
 </template>
 
 <script>
-import RecipeRow from '../components/RecipeRow'
-export default {
-	 name: 'RecipeListView',
-	 components: {RecipeRow},
-	 data(){
-		 return {
-			 recipeFilter: '',
-			 recipeList: [{id: 1, name: 'Recipe 1'}, {id:2, name: 'Meatballs'}]
-		 }
-	 },
-	 computed: {
-		 filteredRecipeList() {
-			 var filterValue = this.recipeFilter.toLowerCase()
-			 return this.recipeList.filter(function(recipe) {
-					return recipe.name.toLowerCase().includes(filterValue);
-				});
-		 }
-	 }
+import axios from "axios";
+import RecipeRow from "../components/RecipeRow";
 
-}
+export default {
+  name: "RecipeListView",
+  components: { RecipeRow },
+  data() {
+    return {
+      recipeFilter: "",
+      recipeList: []
+    };
+  },
+  created() {
+    axios
+      .get("http://localhost:8080/recipes/")
+      .then(response => this.updateRecipeList(response));
+  },
+  methods: {
+    updateRecipeList(response) {
+      this.recipeList = response.data;
+    }
+  },
+  computed: {
+    filteredRecipeList() {
+      var filterValue = this.recipeFilter.toLowerCase();
+      return this.recipeList.filter(function(recipe) {
+        return recipe.name.toLowerCase().includes(filterValue);
+      });
+    }
+  }
+};
 </script>
