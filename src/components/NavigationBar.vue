@@ -11,8 +11,8 @@
 		<div class="navbar-nav">
 			<router-link class="nav-item nav-link" :to="{name:'FoodListView'}">Food</router-link>
 			<router-link class="nav-item nav-link" :to="{name:'RecipeListView'}">Recipes</router-link>
-			<a class="nav-item nav-link" href="#">Meal Planner</a>
-		</div>
+			<router-link class="nav-item nav-link" :to="{name:'MealPlanListView'}">Meal Planner</router-link>
+			</div>
 	</div>
 </nav>
 </template>

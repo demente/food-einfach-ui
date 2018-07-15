@@ -7,6 +7,8 @@ import RecipeListView from '@/views/RecipeListView'
 import FoodView from '@/views/FoodView'
 import FoodEditableView from '@/views/FoodEditableView'
 import RecipeNewView from '@/views/RecipeNewView'
+import MealPlanNewView from '@/views/MealPlanNewView'
+import MealPlanListView from '@/views/MealPlanListView'
 
 Vue.use(Router)
 
@@ -51,6 +53,16 @@ export default new Router({
       component: FoodEditableView,
       props: true
     },
+    {
+      path: 'mealplans/new',
+      name: 'MealPlanNewView',
+      component: MealPlanNewView
+    },
+    {
+      path: '/mealplans',
+      name: 'MealPlanListView',
+      component: MealPlanListView
+    }
   ],
   linkActiveClass: "active"
 })
