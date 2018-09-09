@@ -32,4 +32,14 @@ describe('ConversionService.js', () => {
     expect(service.toGram(elementInGram)).to.equal(2000000)
     expect(service.toGram(elementInMicrogram)).to.equal(2)
   })
+
+  it('converts to unit with best matching precision', () => {
+    const elementInMilligram = { weight: 1000, unit: 'MICROGRAM' }
+    const elementInGram = { weight: 1000000, unit: 'MICROGRAM' }
+    const elementInMicrogram = { weight: 100, unit: 'MICROGRAM' }
+
+    expect(service.toBestUnit(elementInMilligram)).to.deep.equal({ weight: 1, unit: 'MILLIGRAM' })
+    expect(service.toBestUnit(elementInGram)).to.deep.equal({ weight: 1, unit: 'GRAM' })
+    expect(service.toBestUnit(elementInMicrogram)).to.deep.equal({ weight: 100, unit: 'MICROGRAM' })
+  })
 })

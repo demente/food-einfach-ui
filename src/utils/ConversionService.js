@@ -34,4 +34,15 @@ export default class ConversionService {
       return element.weight
     }
   }
+
+  toBestUnit (element) {
+    var micrograms = this.toMicrogram(element)
+    if (micrograms >= 1000000) {
+      return { weight: this.toGram(element), unit: 'GRAM' }
+    }
+    if (micrograms >= 1000) {
+      return { weight: this.toMilligram(element), unit: 'MILLIGRAM' }
+    }
+    return { weight: micrograms, unit: 'MICROGRAM' }
+  }
 }
