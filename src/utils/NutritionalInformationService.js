@@ -1,3 +1,5 @@
+import ConversionService from './ConversionService'
+
 export default class NutritionalInformationService {
   /**
    * @param {*} recipeList - list of recipes
@@ -17,6 +19,7 @@ export default class NutritionalInformationService {
    * @returns nutritional information in one serving
    */
   perRecipeServing (recipe) {
+    const conversionService = new ConversionService()
     var perIngredient = []
 
     for (var j in recipe.ingredients) {
@@ -26,11 +29,11 @@ export default class NutritionalInformationService {
 
       var info = {}
       info.calories = ingredient.food.nutritionalInformation.calories * timesHundredGrams
-      info.carbohydrates = { weight: this.toMicrogram(ingredient.food.nutritionalInformation.carbohydrates) * timesHundredGrams, unit: 'MICROGRAM' }
-      info.fat = { weight: this.toMicrogram(ingredient.food.nutritionalInformation.fat) * timesHundredGrams, unit: 'MICROGRAM' }
-      info.fibre = { weight: this.toMicrogram(ingredient.food.nutritionalInformation.fibre) * timesHundredGrams, unit: 'MICROGRAM' }
-      info.protein = { weight: this.toMicrogram(ingredient.food.nutritionalInformation.protein) * timesHundredGrams, unit: 'MICROGRAM' }
-      info.sugar = { weight: this.toMicrogram(ingredient.food.nutritionalInformation.sugar) * timesHundredGrams, unit: 'MICROGRAM' }
+      info.carbohydrates = { weight: conversionService.toMicrogram(ingredient.food.nutritionalInformation.carbohydrates) * timesHundredGrams, unit: 'MICROGRAM' }
+      info.fat = { weight: conversionService.toMicrogram(ingredient.food.nutritionalInformation.fat) * timesHundredGrams, unit: 'MICROGRAM' }
+      info.fibre = { weight: conversionService.toMicrogram(ingredient.food.nutritionalInformation.fibre) * timesHundredGrams, unit: 'MICROGRAM' }
+      info.protein = { weight: conversionService.toMicrogram(ingredient.food.nutritionalInformation.protein) * timesHundredGrams, unit: 'MICROGRAM' }
+      info.sugar = { weight: conversionService.toMicrogram(ingredient.food.nutritionalInformation.sugar) * timesHundredGrams, unit: 'MICROGRAM' }
       info.vitamins = this.elementsMultipliedBy(ingredient.food.nutritionalInformation.vitamins, timesHundredGrams)
       info.minerals = this.elementsMultipliedBy(ingredient.food.nutritionalInformation.minerals, timesHundredGrams)
 
@@ -45,6 +48,8 @@ export default class NutritionalInformationService {
    * @returns nutritionalInfo
    */
   total (nutritionalInformationList) {
+    const conversionService = new ConversionService()
+
     var total = {
       calories: 0,
       protein: { 'weight': 0, unit: 'MICROGRAM' },
@@ -58,11 +63,11 @@ export default class NutritionalInformationService {
     for (var i in nutritionalInformationList) {
       var info = nutritionalInformationList[i]
       total.calories += info.calories
-      total.protein.weight += this.toMicrogram(info.protein)
-      total.fat.weight += this.toMicrogram(info.fat)
-      total.carbohydrates.weight += this.toMicrogram(info.carbohydrates)
-      total.sugar.weight += this.toMicrogram(info.sugar)
-      total.fibre.weight += this.toMicrogram(info.fibre)
+      total.protein.weight += conversionService.toMicrogram(info.protein)
+      total.fat.weight += conversionService.toMicrogram(info.fat)
+      total.carbohydrates.weight += conversionService.toMicrogram(info.carbohydrates)
+      total.sugar.weight += conversionService.toMicrogram(info.sugar)
+      total.fibre.weight += conversionService.toMicrogram(info.fibre)
 
       total.minerals = this.addElement(total.minerals, info.minerals)
       total.vitamins = this.addElement(total.vitamins, info.vitamins)
@@ -77,13 +82,15 @@ export default class NutritionalInformationService {
    * @returns totals
    */
   addElement (totals, elements) {
+    const conversionService = new ConversionService()
+
     for (var i in elements) {
       var element = elements[i]
       var elementTotal = this.elementWithName(totals, element.name)
       if (elementTotal) {
-        elementTotal.amount.weight += this.toMicrogram(element.amount)
+        elementTotal.amount.weight += conversionService.toMicrogram(element.amount)
       } else {
-        element.amount.weight = this.toMicrogram(element.amount)
+        element.amount.weight = conversionService.toMicrogram(element.amount)
         element.amount.unit = 'MICROGRAM'
         totals.push(element)
       }
@@ -147,22 +154,5 @@ export default class NutritionalInformationService {
 
   elementsMultipliedBy (elements, multiplier) {
     return this.elementsDividedBy(elements, 1 / multiplier)
-  }
-
-  /**
-   *
-   * @param {*} elemen
-   * @returns weight of element in micrograms
-   */
-  toMicrogram (element) {
-    if (element.unit === 'MICROGRAM') {
-      return element.weight
-    }
-    if (element.unit === 'GRAM') {
-      return element.weight * 1000000
-    }
-    if (element.unit === 'MILLIGRAM') {
-      return element.weight * 1000
-    }
   }
 }

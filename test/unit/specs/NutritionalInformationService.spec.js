@@ -322,14 +322,6 @@ describe('NutritionalInformationService.js', () => {
     expect(service.elementsMultipliedBy(actual, 10)).to.deep.equal(expected)
   })
 
-  it('returns weight converted to micrograms', () => {
-    const elementInMilligram = { weight: 20, unit: 'MILLIGRAM' }
-    const elementInGram = { weight: 20, unit: 'GRAM' }
-
-    expect(service.toMicrogram(elementInMilligram)).to.equal(20000)
-    expect(service.toMicrogram(elementInGram)).to.equal(20000000)
-  })
-
   it('finds element with given name', () => {
     var expected = { name: 'Ca' }
     var elements = [{ name: 'Fe' }, { name: 'Cu' }, expected]
