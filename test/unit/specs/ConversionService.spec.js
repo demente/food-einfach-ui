@@ -42,4 +42,10 @@ describe('ConversionService.js', () => {
     expect(service.toBestUnit(elementInGram)).to.deep.equal({ weight: 1, unit: 'GRAM' })
     expect(service.toBestUnit(elementInMicrogram)).to.deep.equal({ weight: 100, unit: 'MICROGRAM' })
   })
+
+  it('returns correct abbreviation for units', () => {
+    expect(service.toAbbreviation('GRAM')).to.equal('g')
+    expect(service.toAbbreviation('MILLIGRAM')).to.equal('mg')
+    expect(service.toAbbreviation('MICROGRAM')).to.equal('μg')
+  })
 })

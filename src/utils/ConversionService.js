@@ -45,4 +45,16 @@ export default class ConversionService {
     }
     return { weight: micrograms, unit: 'MICROGRAM' }
   }
+
+  toAbbreviation (unit) {
+    if (unit === 'GRAM') {
+      return 'g'
+    }
+    if (unit === 'MILLIGRAM') {
+      return 'mg'
+    }
+    if (unit === 'MICROGRAM') {
+      return 'μg'
+    }
+  }
 }
