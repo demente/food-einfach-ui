@@ -2,7 +2,7 @@
 <div class="row">
 	    <div class="col">{{element.name}}</div>
 		<div class="col text-right">{{convert(element.amount)}}</div>
-    </div>	
+</div>	
 </template>
 
 <script>

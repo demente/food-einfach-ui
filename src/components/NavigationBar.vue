@@ -1,6 +1,5 @@
 <template>
-
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+ <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-3">
 	<a class="navbar-brand" href="#">FoodEinfach</a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse"
 		data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
@@ -19,6 +18,6 @@
 
 <script>
 export default {
-  name: 'NavigationBar'
-}
+  name: "NavigationBar"
+};
 </script>
