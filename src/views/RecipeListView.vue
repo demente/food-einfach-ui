@@ -1,62 +1,44 @@
 <template>
-<div class="container">
-	<div class="row">&nbsp;</div>
-
-	<div class="row">
-		<div class="col">
-			<h1>Recipes</h1>
-		</div>
-		<div class="col text-right">
-			<router-link type="button" class="btn btn-primary" :to="{name:'RecipeNewView'}">New</router-link>
-		</div>
-	</div>
-
-
-	<div class="row">&nbsp;</div>
-
-	<div class="row">
-		<input class="form-control" placeholder="Filter..."
-			v-model="recipeFilter" />
-	</div>
-	<div class="row">&nbsp;</div>
-	<div class="row">
-		<div class="col font-weight-bold ">Name</div>
-	</div>
-	<RecipeRow v-for="recipe in filteredRecipeList" :recipe="recipe"
-		:key="recipe.id" />
-</div>
+<div class="container rounded  pt-2 pb-2" style="background-color:white;">
+    <table>
+        <thead>
+            <th></th>
+            <th>Name</th>
+            <th>Type</th>
+        </thead>
+        <tbody>
+            <tr v-for="recipe in recipeList" v-bind:key="recipe.id">
+                <td><router-link class="fa fa-pencil" aria-hidden="true" :to="{name:'RecipeView', params: {id: recipe.id}}"></router-link></td>
+                <td>{{recipe.name}}</td>
+                <td>{{concat(recipe.type)}}</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 </template>
+
 
 <script>
 import axios from "axios";
-import RecipeRow from "../components/RecipeRow";
-
 export default {
   name: "RecipeListView",
-  components: { RecipeRow },
   data() {
     return {
-      recipeFilter: "",
       recipeList: []
     };
   },
   created() {
-    axios
-      .get("http://localhost:8080/recipes/")
-      .then(response => this.updateRecipeList(response));
+    axios.get("http://localhost:8080/recipeinfo/").then(response => {
+      this.recipeList = response.data;
+    });
   },
   methods: {
-    updateRecipeList(response) {
-      this.recipeList = response.data;
-    }
-  },
-  computed: {
-    filteredRecipeList() {
-      var filterValue = this.recipeFilter.toLowerCase();
-      return this.recipeList.filter(function(recipe) {
-        return recipe.name.toLowerCase().includes(filterValue);
-      });
+    concat(type) {
+      if (type) {
+        return type.join(", ");
+      }
     }
   }
 };
 </script>
+
