@@ -13,21 +13,21 @@ describe('FoodListView.vue', () => {
   })
 
   it('updates food list with response from REST endpoint', (done) => {
-    var expected = [{
+    var expected = {
       id: 1,
       name: 'Test',
       type: 'FRUIT'
-    }]
+    }
 
-    moxios.stubRequest('http://localhost:8080/foodinfo', {
+    moxios.stubRequest('http://localhost:8080/foodinfo/', {
       status: 200,
-      response: expected
+      response: [expected]
     })
 
     const foodListView = shallowMount(FoodListView)
 
     moxios.wait(() => {
-      expect(foodListView.vm.foodList).to.equal(expected)
+      expect(foodListView.vm.foodList).to.contain(expected)
       done()
     })
   })
