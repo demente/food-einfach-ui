@@ -8,8 +8,8 @@
         </thead>
         <tbody>
             <tr v-for="recipe in recipeList" v-bind:key="recipe.id">
-                <td><router-link class="fa fa-pencil" aria-hidden="true" :to="{name:'RecipeView', params: {id: recipe.id}}"></router-link></td>
-                <td>{{recipe.name}}</td>
+                <td><router-link class="fa fa-pencil" aria-hidden="true" :to="{name:'RecipeEditableView', params: {id: recipe.id}}"></router-link></td>
+                <td><router-link :to="{name:'RecipeView', params: {id: recipe.id}}">{{recipe.name}}</router-link></td>
                 <td>{{concat(recipe.type)}}</td>
             </tr>
         </tbody>
