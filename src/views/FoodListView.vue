@@ -1,59 +1,57 @@
 <template>
-<div class="container">
-	<div class="row">&nbsp;</div>
-
-	<div class="row">
-		<h1>Food</h1>
-	</div>
-	<div class="row">&nbsp;</div>
-	
-	<div class="row">
-		<input class="form-control" placeholder="Filter..."
-			v-model="foodFilter" />
-	</div>
-	<div class="row">&nbsp;</div>
-	<div class="row">
-		<div class="col font-weight-bold ">Name</div>
-		<div class="col font-weight-bold ">Type</div>
-	</div>
-	<FoodRow v-for="food in filteredFoodList" :food="food" :key="food.id" />
-</div>
+<div class="container rounded  pt-2 pb-2" style="background-color:white;">
+    <table>
+        <thead>
+            <th></th>
+            <th>Name</th>
+            <th>Type</th>
+        </thead>
+        <tbody>
+            <tr v-for="food in foodList" v-bind:key="food.id">
+                <td><router-link class="fa fa-pencil" aria-hidden="true" :to="{name:'FoodView', params: {id: food.id}}"></router-link></td>
+                <td>{{food.name}}</td>
+                <td>{{food.type}}</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 </template>
 
-<script>
-import FoodRow from "../components/FoodRow";
-import axios from "axios";
 
+<script>
+import axios from "axios";
 export default {
-  
   name: "FoodListView",
-  components: { FoodRow },
   data() {
     return {
       foodList: [],
-      foodFilter: ""
+      sortOrder: "desc",
+      sortBy: "name"
     };
   },
   created() {
     axios
       .get("http://localhost:8080/foodinfo/")
-      .then(response => this.updateFoodList(response));
+      .then(response => (this.foodList = response.data));
   },
   methods: {
-    updateFoodList(response) {
-      this.foodList = response.data;
-    }
-  },
-  computed: {
-    filteredFoodList() {
-      var filterValue = this.foodFilter.toLowerCase();
-      return this.foodList.filter(function(food) {
-        return (
-          food.name.toLowerCase().includes(filterValue) 
-           || (food.type && food.type.toLowerCase().includes(filterValue))
-        );
+    sort(sortBy, sortOrder) {
+      this.sortOrder = sortOrder;
+      this.sortBy = sortBy;
+
+      this.foodList.sort(function(a, b) {
+        if (sortBy === "name" && sortOrder === "asc") {
+          return a.name.localeCompare(b.name);
+        } else if (sortBy === "name" && sortOrder === "desc") {
+          return b.name.localeCompare(a.name);
+        } else if (sortBy === "type" && sortOrder === "desc") {
+          return b.type.localeCompare(a.type);
+        } else {
+          return a.type.localeCompare(b.type);
+        }
       });
     }
   }
 };
 </script>
+
