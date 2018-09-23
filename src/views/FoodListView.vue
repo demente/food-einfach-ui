@@ -8,8 +8,8 @@
         </thead>
         <tbody>
             <tr v-for="food in foodList" v-bind:key="food.id">
-                <td><router-link class="fa fa-pencil" aria-hidden="true" :to="{name:'FoodView', params: {id: food.id}}"></router-link></td>
-                <td>{{food.name}}</td>
+                <td><router-link class="fa fa-pencil" aria-hidden="true" :to="{name:'FoodEditableView', params: {id: food.id}}"></router-link></td>
+                <td><router-link :to="{name:'FoodView', params: {id: food.id}}">{{food.name}}</router-link></td>
                 <td>{{food.type}}</td>
             </tr>
         </tbody>
