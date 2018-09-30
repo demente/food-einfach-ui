@@ -14,6 +14,16 @@ export default class NutritionalInformationService {
     var totals = this.total(nutritionalInfoPerRecipe)
     return this.dividedBy(totals, recipeList.length)
   }
+
+  averagePerDay (recipeList) {
+    var nutritionalInfoPerRecipe = []
+    for (var i in recipeList) {
+      var recipe = recipeList[i]
+      nutritionalInfoPerRecipe.push(this.perRecipeServing(recipe))
+    }
+    var totals = this.total(nutritionalInfoPerRecipe)
+    return this.dividedBy(totals, 7)
+  }
   /**
    * @param {*} recipe
    * @returns nutritional information in one serving
