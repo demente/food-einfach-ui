@@ -4,10 +4,12 @@
         <table>
             <thead>
                 <th></th>
+                <th></th>
                 <th>Period</th>
                 </thead>
             <tbody>
                 <tr v-for="mealPlan in mealPlanList" v-bind:key="mealPlan.id">
+                    <td><a class="fa fa-trash" aria-hidden="true" @click="deleteMealPlan(mealPlan.id)"></a></td>
                     <td><router-link class="fa fa-pencil" aria-hidden="true" :to="{name:'MealPlanEditableView', params: {id: mealPlan.id}}"></router-link></td>
                     <td><router-link :to="{name:'MealPlanView', params: {id: mealPlan.id}}">{{mealPlan.startDate}} - {{mealPlan.endDate}}</router-link></td>
                     </tr>
@@ -33,9 +35,19 @@ export default {
     };
   },
   created() {
-    axios
-      .get("http://localhost:8080/mealplans/")
-      .then(response => (this.mealPlanList = response.data));
+    this.updateMealPlanList();
+  },
+  methods: {
+    updateMealPlanList() {
+      axios
+        .get("http://localhost:8080/mealplans/")
+        .then(response => (this.mealPlanList = response.data));
+    },
+    deleteMealPlan(id) {
+      axios
+        .delete("http://localhost:8080/mealplans/" + id)
+        .then(() => this.updateMealPlanList());
+    }
   }
 };
 </script>
