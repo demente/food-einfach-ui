@@ -38,6 +38,10 @@
 							<option value="GRAIN">Grain</option>
 							<option value="MEAT">Meat</option>
 							<option value="DAIRY">Dairy</option>
+							<option value="HERBS">Herbs</option>
+							<option value="OIL">Oil</option>
+							<option value="FISH">Fish</option>
+							<option value="LEGUMES">Legumes</option>
 						</select>
 					</div>
 				</div>
