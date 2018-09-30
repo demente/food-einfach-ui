@@ -1,53 +1,105 @@
 <template>
-    <div class="container">
+    <div class="container rounded  pt-2 pb-2" style="background-color:white;">
+<!--breadcrumb-->
+<div class="row ">
+  <div class="col">
+	<ol class="breadcrumb">
+		<router-link class="breadcrumb-item" :to="{name:'MealPlanListView'}">Meal Planner</router-link>
+		<li class="breadcrumb-item active">Week {{mealPlan.startDate}} - {{mealPlan.endDate}} (new)</li>
+	</ol>
+  </div>
+</div>
+<!--end of breadcrumb -->
 
-            <div class="row">
-                    <h1>Meal plan</h1>
-            </div>
 
-            <div class="row">
-                <div class="col">
-                    <h3>Monday</h3>
-                    <div class="row">
-                        <h5>Breakfast</h5>
-                    </div>
-                    <div class="row">
-                        <input type="button" value="Add recipe" class="btn btn-primary btn-sm offset-1"/>
-                        <input type="button" value="Add food" class="btn btn-primary btn-sm offset-1"/>
-                        
-                    </div>
-                    <div class="row">
-                        Lunch
-                    </div>
-                    <div class="row">
-                        Dinner
-                    </div>
-                </div>
-                <div class="col">
-                    Average nutrition per day
-                </div>
-            </div>
-            <div class="row"></div>
-            <div class="row"></div>
-            <div class="row"></div>
-            <div class="row"></div>
-            <div class="row"></div>
-            <div class="row"></div>
+<!-- header, tags and picture row -->
+<div class="row">
+<!-- column header and tags-->
+	<div class="col">
+		<div class="row">
+			<div class="col">
+				<div class="form-group row">
+					<label  class="col-sm-2 col-form-label">Start date</label>
+					<div class="col-sm-10">
+						<input type="date" class="form-control" placeholder="Start date" v-model="mealPlan.startDate">
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="form-group row">
+					<label  class="col-sm-2 col-form-label">End date</label>
+					<div class="col-sm-10">
+						<input type="date" class="form-control" placeholder="Start date" v-model="mealPlan.endDate">
+					</div>
+				</div>
+			</div>
+		</div>
+				
+        <EditableDayWeek v-for="day in ['MONDAY','TUESDAY','WEDNESDAY','THURSDAY', 'FRIDAY','SATURDAY','SUNDAY']" :key="day" :dayOfWeek="day" :recipes="mealPlan.recipes"
+				@recipeRemoved="removeRecipe"/>
+		
+	</div>
+<!-- end of column header and tags-->
 
-    </div>
+<!-- column image-->
+	<div class="col ">
+			</div>
+<!-- end of column image-->
+
+</div>
+<!-- end of header, tags and picture row -->
+
+
+<!-- buttons -->
+<div class="row">
+	<div class="col-8"></div>
+	<div class="col-4">
+	<a class="btn btn-primary mb-1" id="save-button" @click="saveMealPlan">Save</a>
+		<router-link class="btn btn-primary mb-1" :to="{name:'MealPlanListView'}">Cancel</router-link>
+		<a href="#" class="btn btn-primary mb-1">Delete</a>
+	</div>
+</div>
+<!--end of buttons -->
+
+</div> <!--parent container -->
+
 </template>
 
 <script>
+import MealEditableRow from "../components/MealEditableRow";
+import EditableDayWeek from "../components/EditableDayWeek";
+import axios from "axios";
+
 export default {
-    name: 'MealPlanNewView',
-    data() {
-        return {
-            mealPlan: {
-                id: null,
-                recipes: []
-            }
-        }
+  name: "MealPlanNewView",
+
+  components: { MealEditableRow, EditableDayWeek },
+  data() {
+    return {
+      mealPlan: { recipes: [] },
+      errorOccurred: false
+    };
+  },
+  methods: {
+    recipesForDay(day) {
+      return this.mealPlan.recipes.filter(item => item.dayOfWeek === day);
+    },
+    removeRecipe(recipe) {
+      this.mealPlan.recipes = this.mealPlan.recipes.filter(
+        item => item != recipe
+      );
+    },
+    saveMealPlan() {
+      axios
+        .post("http://localhost:8080/mealplans/", this.mealPlan)
+        .then(response => {
+          this.errorOccurred = false;
+        })
+        .catch(err => (this.errorOccurred = true));
     }
-}
+  }
+};
 </script>
 
+<style>
+</style>

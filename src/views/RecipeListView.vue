@@ -1,5 +1,11 @@
 <template>
 <div class="container rounded  pt-2 pb-2" style="background-color:white;">
+    <div class="row">
+        <div class="col">
+            <router-link class="btn btn-primary mb-1" :to="{name:'RecipeNewView'}">New</router-link>
+        </div>
+    </div>
+    
     <table>
         <thead>
             <th></th>

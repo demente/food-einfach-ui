@@ -1,14 +1,17 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import RecipeView from '@/views/RecipeView'
-import RecipeEditableView from '@/views/RecipeEditableView'
-import FoodListView from '@/views/FoodListView'
-import RecipeListView from '@/views/RecipeListView'
 import FoodView from '@/views/FoodView'
 import FoodEditableView from '@/views/FoodEditableView'
+import FoodListView from '@/views/FoodListView'
+import FoodNewView from '@/views/FoodNewView'
+import RecipeListView from '@/views/RecipeListView'
+import RecipeView from '@/views/RecipeView'
+import RecipeEditableView from '@/views/RecipeEditableView'
 import RecipeNewView from '@/views/RecipeNewView'
-import MealPlanNewView from '@/views/MealPlanNewView'
 import MealPlanListView from '@/views/MealPlanListView'
+import MealPlanView from '@/views/MealPlanView'
+import MealPlanEditableView from '@/views/MealPlanEditableView'
+import MealPlanNewView from '@/views/MealPlanNewView'
 
 Vue.use(Router)
 
@@ -31,6 +34,7 @@ export default new Router({
       component: RecipeEditableView,
       props: true
     },
+
     {
       path: '/recipes/new',
       name: 'RecipeNewView',
@@ -40,6 +44,11 @@ export default new Router({
       path: '/food',
       name: 'FoodListView',
       component: FoodListView
+    },
+    {
+      path: '/food/new',
+      name: 'FoodNewView',
+      component: FoodNewView
     },
     {
       path: '/food/view/:id',
@@ -53,16 +62,30 @@ export default new Router({
       component: FoodEditableView,
       props: true
     },
+
     {
-      path: 'mealplans/new',
-      name: 'MealPlanNewView',
-      component: MealPlanNewView
+      path: '/mealplans/edit/:id',
+      name: 'MealPlanEditableView',
+      component: MealPlanEditableView,
+      props: true
     },
     {
       path: '/mealplans',
       name: 'MealPlanListView',
       component: MealPlanListView
+    },
+    {
+      path: '/mealplans/view/:id',
+      name: 'MealPlanView',
+      component: MealPlanView,
+      props: true
+    },
+    {
+      path: '/mealplans/new',
+      name: 'MealPlanNewView',
+      component: MealPlanNewView
     }
   ],
-  linkActiveClass: "active"
+  mode: 'history',
+  linkActiveClass: 'active'
 })
