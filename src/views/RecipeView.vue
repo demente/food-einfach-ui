@@ -33,7 +33,7 @@
 		
 		<div class="row mb-2">
 			<div class="col">
-        <a v-for="meal in recipe.type" v-bind:key="meal" class="btn btn-sm btn-secondary mb-1">{{meal}}</a>
+        <a v-for="meal in recipe.type" v-bind:key="meal" class="btn btn-sm btn-secondary mb-1 mr-1">{{meal}}</a>
 			</div>
 		</div>
 		
