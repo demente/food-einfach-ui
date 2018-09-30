@@ -211,7 +211,6 @@
   <h4 class="alert-heading">Oops!</h4>
   <p class="mb-0">Something went wrong!</p>
 </div>
-
 <!-- end of error message -->
 
 <!-- buttons -->
@@ -310,7 +309,7 @@ export default {
         .post("http://localhost:8080/food/", this.food)
         .then(response => {
           this.errorOccurred = false;
-          thsi.convertFood(response.data);
+          this.convertFood(response.data);
         })
         .catch(err => (this.errorOccurred = true));
     },
