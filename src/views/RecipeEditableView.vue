@@ -234,7 +234,7 @@ import IngredientEditableRow from "../components/IngredientEditableRow";
 
 export default {
   name: "RecipeEditableView",
-  props: ["id"],
+  props: ["id", "food"],
   components: { IngredientEditableRow },
   data() {
     return {
@@ -248,9 +248,15 @@ export default {
       .then(response => this.convertRecipe(response.data));
   },
   methods: {
+    addFood(food) {
+      this.recipe.ingredients.push({ food: food, amount: { unit: "GRAM" } });
+    },
     convertRecipe(data) {
       this.recipe = data;
       this.convertIngredientsToGram(data.ingredients);
+      if (this.food) {
+        this.addFood(this.food);
+      }
     },
     convertIngredientsToGram(ingredients) {
       for (var i in ingredients) {

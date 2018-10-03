@@ -1,5 +1,8 @@
 <template>
 <div class="container rounded  pt-2 pb-2" style="background-color:white;">
+
+
+
 <!--breadcrumb-->
 <div class="row ">
   <div class="col">
@@ -10,11 +13,12 @@
   </div>
 </div>
 <!--end of breadcrumb -->
+<RecipeModal :visible="showModal" @closed="showModal = false" :food="food" />
 
 <!-- buttons -->
 <div class="row">
 	<div class="col justify-content-end">
-		<a href="#" class="btn btn-primary mb-1">Add to recipe</a>
+		<a href="#" class="btn btn-primary mb-1"  @click="showModal = !showModal">Add to recipe</a>
 		<router-link class="btn btn-primary mb-1" :to="{name:'FoodEditableView', params: {id: food.id}}">Edit</router-link>
 		<a href="#" class="btn btn-primary mb-1">Delete</a>
 	</div>
@@ -127,14 +131,16 @@
 import axios from "axios";
 import ConversionService from "../utils/ConversionService.js";
 import ElementRow from "../components/ElementRow";
+import RecipeModal from "../components/RecipeModal";
 
 export default {
   name: "FoodView",
   props: ["id"],
-  components: { ElementRow },
+  components: { ElementRow, RecipeModal },
   data() {
     return {
-      food: { nutritionalInformation: { minerals: [], vitamins: [] } }
+      food: { nutritionalInformation: { minerals: [], vitamins: [] } },
+      showModal: false
     };
   },
   created() {

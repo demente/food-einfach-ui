@@ -38,7 +38,8 @@ export default new Router({
     {
       path: '/recipes/new',
       name: 'RecipeNewView',
-      component: RecipeNewView
+      component: RecipeNewView,
+      props: true
     },
     {
       path: '/food',
