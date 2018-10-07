@@ -1,7 +1,8 @@
 <template>
     <div class="row">
 		<div class="col">
-      <RouterLink class="breadcrumb-item" :to="{name:'FoodView', params: {id: ingredient.food.id}}">{{ingredient.food.name}}</RouterLink></div>
+      <router-link class="breadcrumb-item" :to="{name:'FoodView', params: {id: ingredient.food.id}}">{{ingredient.food.name}}</router-link>
+		</div>
 	    <div class="col text-right">{{convert(ingredient.amount)}}</div>
     </div>
 </template>

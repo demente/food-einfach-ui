@@ -92,6 +92,9 @@
 </div>
 <!-- end of column header and tags-->
 
+
+<FoodModal :visible="showFoodModal" :element="foodModalElement" @closed="showFoodModal = false"  />	
+
 <!-- column image-->
 	<div class="col">
 		<div class="row  mb-2">
@@ -143,7 +146,7 @@
 								<h5 class="badge-primary" style="padding: 10px 10px; font-size:.9rem">Vitamins (per portion)</h5>
 							</div>
 						</div>
-              <ElementRow v-for="vitamin in sortedVitamins" v-bind:key="vitamin.name" :element="vitamin"/>
+              <ElementRow v-for="vitamin in sortedVitamins" v-bind:key="vitamin.name" :element="vitamin" @showFoodModal="updateFoodModal(vitamin, 'VITAMIN')" />
             </div>
 				</div>
 			</div>
@@ -153,6 +156,7 @@
 
 		<!-- minerals row -->
 		<div class="row  mb-2">
+			
 			<div class="col">
 				<div class="row">
 					<div class="container">
@@ -161,9 +165,8 @@
 								<h5 class="badge-primary" style="padding: 10px 10px; font-size:.9rem">Minerals</h5>
 							</div>
 						</div>
-            <ElementRow v-for="mineral in sortedMinerals" v-bind:key="mineral.name" :element="mineral"/>
-						
-					</div>
+            <ElementRow v-for="mineral in sortedMinerals" v-bind:key="mineral.name" :element="mineral"  @showFoodModal="updateFoodModal(mineral, 'MINERAL')" />
+						</div>
 				</div>
 			</div>
 			
@@ -187,16 +190,18 @@ import ConversionService from "../utils/ConversionService.js";
 import ElementRow from "../components/ElementRow";
 import IngredientRow from "../components/IngredientRow";
 import NutritionalInformationService from "../utils/NutritionalInformationService.js";
-
+import FoodModal from "../components/FoodModal";
 export default {
   name: "RecipeView",
   props: ["id"],
   data() {
     return {
-      recipe: {}
+      recipe: {},
+      showFoodModal: false,
+      foodModalElement: null
     };
   },
-  components: { IngredientRow, ElementRow },
+  components: { IngredientRow, ElementRow, FoodModal },
   created() {
     axios
       .get("http://localhost:8080/recipes/" + this.id)
@@ -208,6 +213,10 @@ export default {
         var conversionService = new ConversionService();
         return conversionService.toGram(amount);
       }
+    },
+    updateFoodModal(element, type) {
+      this.showFoodModal = true;
+      this.foodModalElement = { name: element.name, type: type };
     }
   },
   computed: {
