@@ -9,11 +9,13 @@
     <table>
         <thead>
             <th></th>
+            <th></th>
             <th>Name</th>
             <th>Type</th>
         </thead>
         <tbody>
             <tr v-for="food in foodList" v-bind:key="food.id">
+                <td><a class="fa fa-trash" aria-hidden="true" @click="deleteFood(food.id)"></a></td>
                 <td><router-link class="fa fa-pencil" aria-hidden="true" :to="{name:'FoodEditableView', params: {id: food.id}}"></router-link></td>
                 <td><router-link :to="{name:'FoodView', params: {id: food.id}}">{{food.name}}</router-link></td>
                 <td>{{food.type}}</td>
@@ -36,9 +38,7 @@ export default {
     };
   },
   created() {
-    axios
-      .get("http://localhost:8080/foodinfo/")
-      .then(response => (this.foodList = response.data));
+    this.updateFoodList();
   },
   methods: {
     sort(sortBy, sortOrder) {
@@ -56,6 +56,16 @@ export default {
           return a.type.localeCompare(b.type);
         }
       });
+    },
+    deleteFood(id) {
+      axios
+        .delete("http://localhost:8080/food/" + id)
+        .then(() => this.updateFoodList());
+    },
+    updateFoodList() {
+      axios
+        .get("http://localhost:8080/foodinfo/")
+        .then(response => (this.foodList = response.data));
     }
   }
 };
