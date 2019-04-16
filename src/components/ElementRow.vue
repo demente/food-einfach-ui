@@ -1,9 +1,25 @@
 <template>
-<div class="row">
-	    <div class="col">{{element.name}}</div>
-		<div class="col text-right">
-      <a class="dropdown-toggle text-danger" @click="showFoodModal" v-if="element.amount.weight < element.dailyNorm.weight"></a> {{convert(element.amount)}}</div>
-      </div>	
+  <div class="row">
+    <div class="col-2">{{element.name}}</div>
+    <div class="col text-right">
+      <a
+        class="dropdown-toggle text-danger"
+        @click="showFoodModal"
+        v-if="deviation(element.amount.weight, element.dailyNorm.weight) > 50"
+      />
+      <a
+        class="dropdown-toggle text-danger"
+        @click="showFoodModal"
+        v-if="deviation(element.amount.weight, element.dailyNorm.weight) > 90"
+      />
+      <a
+        class="dropdown-toggle text-danger"
+        @click="showFoodModal"
+        v-if="element.amount.weight < element.dailyNorm.weight"
+      ></a>
+      {{convert(element.amount)}} of {{convert(element.dailyNorm )}}
+    </div>
+  </div>
 </template>
 
 
@@ -25,6 +41,9 @@ export default {
     },
     showFoodModal() {
       this.$emit("showFoodModal", this.element);
+    },
+    deviation(value, compareToValue) {
+      return ((compareToValue - value) * 100) / compareToValue;
     }
   }
 };
