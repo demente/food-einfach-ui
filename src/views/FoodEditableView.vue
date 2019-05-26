@@ -47,6 +47,61 @@
 				</div>
 			</div>
 		</div>
+		
+		<!-- price -->
+		<div class="row  mb-2">
+			<div class="container">
+				<div class="row">
+					<div class="col">	
+						<h5 class="badge-primary" style="padding: 10px 10px; font-size:.9rem">Price and packaging</h5>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<div class="form-group row">
+							<label for="name" class="col-sm-4 col-form-label">Weight per package</label>
+							<div class="col-sm-8">
+								<div class="input-group mb-3">
+									<input type="number" class="form-control" aria-label="Weight per package" v-model="food.minimumWeight.weight">
+									  <div class="input-group-append">
+										<span class="input-group-text">g</span>
+									  </div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<div class="form-group row">
+							<label for="name" class="col-sm-4 col-form-label">Package name</label>
+							<div class="col-sm-8">
+								<div class="input-group mb-3">
+									<input type="text" class="form-control" aria-label="package name" v-model="food.minimumPackageName">
+									  
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<div class="form-group row">
+							<label for="name" class="col-sm-4 col-form-label">Price</label>
+							<div class="col-sm-8">
+								<div class="input-group mb-3">
+									<input type="number" class="form-control" aria-label="Price in euros" v-model="food.pricePerMinimumWeight">
+									  <div class="input-group-append">
+										<span class="input-group-text">€</span>
+									  </div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- end price -->
 				
 		<!-- nutriotional information row -->
 		<div class="row  mb-2">
@@ -280,6 +335,7 @@ export default {
       this.convertMineralsToMilligram(data.nutritionalInformation.minerals);
     },
     convertNutrientsToGram(nutritionalInformation) {
+	this.food.minimumWeight = this.convertToGram(this.food.minimumWeight);
       this.food.nutritionalInformation.protein = this.convertToGram(
         nutritionalInformation.protein
       );

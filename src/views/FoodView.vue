@@ -40,7 +40,26 @@
 				<a href="#" class="btn btn-sm btn-secondary mb-1">{{food.type}}</a>
 			</div>
 		</div>
-				
+		
+		<div class="row mb-2" v-if="food.minimumWeight">
+		<div class="container">
+			<div class="row">
+					<div class="col">	
+						<h5 class="badge-primary" style="padding: 10px 10px; font-size:.9rem">Packaging and pricing</h5>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">Minimum package</div>
+					<div class="col text-right">{{convert(food.minimumWeight)}} g per {{food.minimumPackageName}}</div>
+				</div>
+				<div class="row">
+					<div class="col">Price per package</div>
+					<div class="col text-right">{{food.pricePerMinimumWeight}} €</div>
+				</div>
+				</div>
+		</div>
+		
+						
 		<!-- nutriotional information row -->
 		<div class="row  mb-2">
 			<div class="container">
